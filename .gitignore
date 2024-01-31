@@ -1,1 +1,4 @@
 .DS_Store
+install/
+log/
+build/
