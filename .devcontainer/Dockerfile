@@ -30,7 +30,7 @@ RUN rosdep update
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 
 # Source the application setup file
-RUN echo "/my_bot/install/setup.bash" >> ~/.bashrc
+RUN echo "source /my_bot_3/install/setup.bash" >> ~/.bashrc
 
 # Update package respositories
 RUN sudo apt-get update
@@ -40,3 +40,7 @@ RUN sudo apt install ros-humble-xacro -y
 
 # Install joint state publisher
 RUN sudo apt install ros-humble-joint-state-publisher-gui -y
+
+# Install gazebo
+RUN sudo apt-get install ros-humble-ros-gz -y
+

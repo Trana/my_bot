@@ -15,3 +15,5 @@ ros2 run joint_state_publisher_gui joint_state_publisher_gui
 
 # Start Rviz from config
 rviz2 -d src/config/view_bot.rviz
+
+ros2 launch ros_gz_example_bringup diff_drive.launch.py
