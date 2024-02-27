@@ -105,7 +105,10 @@
       </plugin>
     </model>
 
- <!-- Moving Forward-->
+<!--  -->
+<!-- Handles keypresses and publishes Twist messages to control the diff_drive model. -->
+<!--  -->
+        <!-- Moving Forward-->
         <plugin filename="libignition-gazebo-triggered-publisher-system.so"
             name="ignition::gazebo::systems::TriggeredPublisher">
             <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
