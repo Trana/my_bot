@@ -137,6 +137,7 @@
         </collision>
       </link>
 
+      <!-- LIDAR -->
       <link name="lidar_link">
         <pose>0 0 0.5 0 0 0</pose>
         <inertial>
@@ -195,6 +196,52 @@
         <parent>chassis</parent>
         <child>lidar_link</child>
       </joint>
+
+      <!-- CAMERA -->
+      <link name="camera_link">
+        <pose>0.9 0 0.2 0 0 0</pose>       
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 0.284363 0.284363 </size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name='camera' type='camera'>
+          <pose>0 0 0 0 0 0</pose>
+          <ignition_frame_id>diff_drive/camera_link</ignition_frame_id>
+          <visualize>true</visualize>
+          <update_rate>10</update_rate>
+          <topic>image</topic>
+          <camera>
+            <always_on>1</always_on>
+            <horizontal_fov>1.089</horizontal_fov>
+            <image>
+              <format>R8G8B8</format>
+              <width>640</width>
+              <height>480</height>
+            </image>
+          </camera>
+          <clip>
+            <near>0.05</near>
+            <far>8.0</far>
+          </clip>
+        </sensor>
+      </link>
+
+      <joint name='camera_joint' type='fixed'>
+        <parent>chassis</parent>
+        <child>camera_link</child>
+      </joint>
+
+      <!-- <joint name='camera_optical_joint' type='fixed'>
+        <parent>camera_link</parent>
+        <child>camera_link_optical</child>        
+      </joint>
+
+      <link name="camera_link_optical">
+        <pose>0 0 0 -1.57079632679 0 -1.57079632679</pose>
+      </link> -->
 
       <joint name='left_wheel_joint' type='revolute'>
         <parent>chassis</parent>

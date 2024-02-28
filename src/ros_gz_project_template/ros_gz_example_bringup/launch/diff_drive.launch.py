@@ -40,26 +40,30 @@ def generate_launch_description():
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
+
+
+    gazebo_config = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
+    world = os.path.join(pkg_project_gazebo,
+                 'worlds/diff_drive.sdf'
+                 )
+    gz_args = world + " --gui-config " + gazebo_config  # Using f-string for string formatting
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': PathJoinSubstitution([
-            pkg_project_gazebo,
-            'worlds',
-            'diff_drive.sdf'
-        ])}.items(),
+        launch_arguments={'gz_args': gz_args}.items()
     )
 
+    
     # For publishing and controlling the robot pose, we need joint states of the robot
     # Configure the robot model by adjusting the joint angles using the GUI slider
-    joint_state_publisher_gui = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui',
-        arguments=[sdf_file],
-        output=['screen']
-    )
+    # joint_state_publisher_gui = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     name='joint_state_publisher_gui',
+    #     arguments=[sdf_file],
+    #     output=['screen']
+    # )
 
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
     robot_state_publisher = Node(
@@ -97,7 +101,7 @@ def generate_launch_description():
         DeclareLaunchArgument('rviz', default_value='true',
                               description='Open RViz.'),
         bridge,
-        joint_state_publisher_gui,
+        # joint_state_publisher_gui,
         robot_state_publisher,
         rviz
     ])
