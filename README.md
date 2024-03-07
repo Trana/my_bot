@@ -21,3 +21,9 @@ ros2 launch ros_gz_example_bringup diff_drive.launch.py
 
 # Run lidar driver node
 ros2 run rplidar_ros rplidar_composition --ros-args -p serial_port:=/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0 -p frame_id:=lidar_link -p angel_compensate:=true -p scan_mode:=Standard -p serial_baudrate:=115200
+
+# Installl Ros2 Control
+sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-ign-ros2-control
+
+# Run keyboard controller for Ros2 controll
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_base_controller/cmd_vel_unstamped

@@ -21,7 +21,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command
 
 from launch_ros.actions import Node
 
@@ -35,13 +35,8 @@ def generate_launch_description():
     pkg_project_description = get_package_share_directory('ros_gz_example_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
-    # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'diff_drive', 'model.sdf')
-    with open(sdf_file, 'r') as infp:
-        robot_desc = infp.read()
 
-
-
+    ## Gazebo
     gazebo_config = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
     world = os.path.join(pkg_project_gazebo,
                  'worlds/diff_drive.sdf'
@@ -54,18 +49,12 @@ def generate_launch_description():
         launch_arguments={'gz_args': gz_args}.items()
     )
 
-    
-    # For publishing and controlling the robot pose, we need joint states of the robot
-    # Configure the robot model by adjusting the joint angles using the GUI slider
-    # joint_state_publisher_gui = Node(
-    #     package='joint_state_publisher_gui',
-    #     executable='joint_state_publisher_gui',
-    #     name='joint_state_publisher_gui',
-    #     arguments=[sdf_file],
-    #     output=['screen']
-    # )
 
+    ## Robot state publisher
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
+    xacro_file  =  os.path.join(pkg_project_description, 'models', 'urdf', 'robot.urdf.xacro')
+    robot_description_urdf = Command(['xacro ', xacro_file])
+
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -73,11 +62,12 @@ def generate_launch_description():
         output='both',
         parameters=[
             {'use_sim_time': True},
-            {'robot_description': robot_desc},
+            {'robot_description': robot_description_urdf},
         ]
     )
 
-    # Visualize in RViz
+
+    ## RViz
     rviz = Node(
        package='rviz2',
        executable='rviz2',
@@ -85,7 +75,8 @@ def generate_launch_description():
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
-    # Bridge ROS topics and Gazebo messages for establishing communication
+
+    ## ROS Gazebo Bridge
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -96,12 +87,28 @@ def generate_launch_description():
         output='screen'
     )
 
+    ## Ros2 Control
+    diff_drive_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=["diff_drive_base_controller"]
+    )
+
+    joint_state_broadcast_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=["joint_state_broadcaster"]
+    )
+
+
+    ## Launch
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
                               description='Open RViz.'),
         bridge,
-        # joint_state_publisher_gui,
         robot_state_publisher,
-        rviz
+        rviz,
+        diff_drive_controller_spawner,
+        joint_state_broadcast_spawner
     ])
