@@ -41,17 +41,19 @@ def generate_launch_description():
     )
 
     ## Gazebo
-    gazebo_config = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
+    gazebo_params_file = os.path.join(pkg_project_bringup, 'config','gazebo_params.yaml')
+    gazebo_config_file = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
+
     world = os.path.join(pkg_project_gazebo,
                  'worlds/diff_drive.sdf'
                  )
-    gz_args = world + " --gui-config " + gazebo_config  # Using f-string for string formatting
+    gz_args = world + " --gui-config " + gazebo_config_file  # Using f-string for string formatting
 
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': gz_args}.items()
+        launch_arguments={'gz_args': gz_args, 'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file}.items()
     )
 
     ## RViz
