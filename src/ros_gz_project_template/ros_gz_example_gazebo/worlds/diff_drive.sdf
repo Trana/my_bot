@@ -78,7 +78,7 @@
 
     <model name="diff_drive">
       <self_collide>true</self_collide>
-      <pose>0 0 0.35 0 0 0</pose>
+      <pose>0 0 0.0325 0 0 0</pose>
       <include merge="true">
         <uri>package://ros_gz_example_description/models/diff_drive</uri>
       </include>
@@ -115,7 +115,7 @@
                 <match field="data">16777235</match>
             </input>
             <output type="ignition.msgs.Twist" topic="/model/diff_drive/cmd_vel">
-                linear: {x: 0.5}, angular: {z: 0.0}
+                linear: {x: 1}, angular: {z: 0.0}
             </output>
         </plugin>
 
@@ -126,7 +126,7 @@
                 <match field="data">16777237</match>
             </input>
             <output type="ignition.msgs.Twist" topic="/model/diff_drive/cmd_vel">
-                linear: {x: -0.5}, angular: {z: 0.0}
+                linear: {x: -1}, angular: {z: 0.0}
             </output>
         </plugin>
 
@@ -137,7 +137,7 @@
                 <match field="data">16777236</match>
             </input>
             <output type="ignition.msgs.Twist" topic="/model/diff_drive/cmd_vel">
-                linear: {x: 0.0}, angular: {z: -0.5}
+                linear: {x: 0.0}, angular: {z: -1}
             </output>
         </plugin>
 
@@ -149,7 +149,7 @@
                 <match field="data">16777234</match>
             </input>
             <output type="ignition.msgs.Twist" topic="/model/diff_drive/cmd_vel">
-                linear: {x: 0.0}, angular: {z: 0.5}
+                linear: {x: 0.0}, angular: {z: 1}
             </output>
         </plugin>
   </world>
