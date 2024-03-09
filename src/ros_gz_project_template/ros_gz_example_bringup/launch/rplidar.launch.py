@@ -26,9 +26,7 @@ def generate_launch_description():
                 {'frame_id': 'lidar_link'},
                 {'angel_compensate': True},
                 {'scan_mode': 'Standard'},
-                {'serial_baudrate': 115200},
-
-                
+                {'serial_baudrate': 115200},                
             ]
         )
     ])

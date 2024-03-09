@@ -36,36 +36,23 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
 
+    robot_state_publisher = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','robot_state_publisher.launch.py')])
+    )
+
     ## Gazebo
     gazebo_config = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
     world = os.path.join(pkg_project_gazebo,
                  'worlds/diff_drive.sdf'
                  )
     gz_args = world + " --gui-config " + gazebo_config  # Using f-string for string formatting
+
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
         launch_arguments={'gz_args': gz_args}.items()
     )
-
-
-    ## Robot state publisher
-    # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
-    xacro_file  =  os.path.join(pkg_project_description, 'models', 'urdf', 'robot.urdf.xacro')
-    robot_description_urdf = Command(['xacro ', xacro_file])
-
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name='robot_state_publisher',
-        output='both',
-        parameters=[
-            {'use_sim_time': True},
-            {'robot_description': robot_description_urdf},
-        ]
-    )
-
 
     ## RViz
     rviz = Node(
@@ -103,11 +90,11 @@ def generate_launch_description():
 
     ## Launch
     return LaunchDescription([
+        robot_state_publisher,  
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
                               description='Open RViz.'),
         bridge,
-        robot_state_publisher,
         rviz,
         diff_drive_controller_spawner,
         joint_state_broadcast_spawner
