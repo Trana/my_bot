@@ -18,10 +18,12 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessStart
 
 from launch_ros.actions import Node
 
@@ -49,6 +51,17 @@ def generate_launch_description():
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
+    robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
+    controller_params_file = os.path.join(pkg_project_bringup, 'config','my_controller.yaml')
+
+    ## Ros2 Control manager
+    controller_manager = Node(
+        package='controller_manager',
+        executable='ros2_control_node',
+        parameters=[{'robot_description': robot_description}, controller_params_file]
+    )
+    delayed_controller_manager = TimerAction(period=3.0, actions=[controller_manager])
+
     ## Ros2 Control
     diff_drive_controller_spawner = Node(
         package='controller_manager',
@@ -56,19 +69,34 @@ def generate_launch_description():
         arguments=["diff_drive_base_controller"]
     )
 
-    joint_state_broadcast_spawner = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=["joint_state_broadcaster"]
+    delayed_diff_drive_controller_spawner = RegisterEventHandler(
+        event_handler=OnProcessStart(
+            target_action=controller_manager,
+            on_start=[diff_drive_controller_spawner],
+        )
+    )
+
+    joint_broad_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_broad"],
+    )
+
+    delayed_joint_broad_spawner = RegisterEventHandler(
+        event_handler=OnProcessStart(
+            target_action=controller_manager,
+            on_start=[joint_broad_spawner],
+        )
     )
 
 
     ## Launch
     return LaunchDescription([
-        DeclareLaunchArgument('rviz', default_value='true',
-                              description='Open RViz.'),
+        # DeclareLaunchArgument('rviz', default_value='true',
+        #                       description='Open RViz.'),
         robot_state_publisher,
-        rviz,
-        diff_drive_controller_spawner,
-        joint_state_broadcast_spawner
+        # rviz,
+        delayed_controller_manager,
+        delayed_diff_drive_controller_spawner,
+        delayed_joint_broad_spawner
     ])
