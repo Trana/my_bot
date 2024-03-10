@@ -27,3 +27,6 @@ sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-
 
 # Run keyboard controller for Ros2 controll
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_base_controller/cmd_vel_unstamped
+
+# List ssh servers on local network
+sudo nmap -p 22 192.168.86.0/24
