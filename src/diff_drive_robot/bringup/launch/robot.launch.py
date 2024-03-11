@@ -35,8 +35,7 @@ def generate_launch_description():
     pkg_project_bringup = get_package_share_directory('bringup')
     pkg_project_gazebo = get_package_share_directory('gazebo')
     pkg_project_description = get_package_share_directory('description')
-    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
-
+    
 
     ## Robot state publisher
     robot_state_publisher = IncludeLaunchDescription(
@@ -79,7 +78,7 @@ def generate_launch_description():
     joint_broad_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_broad"],
+        arguments=["joint_state_broadcaster"],
     )
 
     delayed_joint_broad_spawner = RegisterEventHandler(
@@ -88,7 +87,6 @@ def generate_launch_description():
             on_start=[joint_broad_spawner],
         )
     )
-
 
     ## Launch
     return LaunchDescription([
