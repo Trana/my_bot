@@ -71,10 +71,10 @@
       <self_collide>true</self_collide>
       <pose>0 0 0.0325 0 0 0</pose>
       <include merge="true">
-        <uri>package://description/models/diff_drive</uri>
+        <uri>package://description/models/urdf/robot.urdf</uri>
       </include>
 
-      <plugin
+      <!-- <plugin
         filename="ignition-gazebo-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
       </plugin>
@@ -86,19 +86,19 @@
         <use_pose_vector_msg>true</use_pose_vector_msg>
         <static_publisher>true</static_publisher>
         <static_update_frequency>1</static_update_frequency>
-      </plugin>
+      </plugin>  -->
 
-      <plugin
+      <!-- <plugin
         filename="ignition-gazebo-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
-        <odom_frame>diff_drive/odom</odom_frame>
-        <robot_base_frame>diff_drive</robot_base_frame>
-      </plugin>
+        <odom_frame>odom</odom_frame>
+        <robot_base_frame>base_link</robot_base_frame>
+      </plugin> -->
     </model>
 
-<!--  -->
-<!-- Handles keypresses and publishes Twist messages to control the diff_drive model. -->
-<!--  -->
+        <!--  -->
+        <!-- Handles keypresses and publishes Twist messages to control the diff_drive model. -->
+        <!--  -->
         <!-- Moving Forward-->
         <plugin filename="libignition-gazebo-triggered-publisher-system.so"
             name="ignition::gazebo::systems::TriggeredPublisher">
