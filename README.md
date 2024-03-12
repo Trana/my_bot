@@ -2,8 +2,15 @@
 
 ## Commands
 
+# Source
+source /home/mikaeltrana/Documents/robot/install/local_setup.bash 
+
 # Build Ros
 colcon build --symlink-install
+
+# Generate new xacro file for sim mode
+xacro /home/mikaeltrana/Documents/robot/my_bot/src/diff_drive_robot/description/models/urdf/robot.urdf.xacro>/home/mikaeltrana/Documents/robot/my_bot/src/diff_drive_robot/description/models/urdf/robot.urdf sim_mode:=true
+
 
 # Exanple using transform
 ros2 run tf2_ros static_transform_publisher 2 1 0 0.785 0 0 world robot_1
