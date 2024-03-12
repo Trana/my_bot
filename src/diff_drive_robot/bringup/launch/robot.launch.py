@@ -39,7 +39,8 @@ def generate_launch_description():
 
     ## Robot state publisher
     robot_state_publisher = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','robot_state_publisher.launch.py')])
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','robot_state_publisher.launch.py')]), 
+        launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true'}.items()
     )
     
     ## RViz

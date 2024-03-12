@@ -37,7 +37,8 @@ def generate_launch_description():
 
 
     robot_state_publisher = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','robot_state_publisher.launch.py')])
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','robot_state_publisher.launch.py')]),
+        launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
     )
 
     ## Gazebo
@@ -47,8 +48,8 @@ def generate_launch_description():
     world = os.path.join(pkg_project_gazebo,
                  'worlds/diff_drive.sdf'
                  )
-    gz_args = world + " --gui-config " + gazebo_config_file  # Using f-string for string formatting
-
+    gz_args = world + " --gui-config " + gazebo_config_file
+    
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(

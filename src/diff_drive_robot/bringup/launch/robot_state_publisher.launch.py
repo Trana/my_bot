@@ -27,7 +27,10 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    # Configure ROS nodes for launch
+
+    # Check if we're told to use sim time
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     # Setup project paths
     pkg_project_bringup = get_package_share_directory('bringup')
@@ -37,7 +40,7 @@ def generate_launch_description():
     ## Robot state publisher
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
     xacro_file  =  os.path.join(pkg_project_description, 'models', 'urdf', 'robot.urdf.xacro')
-    robot_description_urdf = Command(['xacro ', xacro_file])
+    robot_description_urdf = Command(['xacro ', xacro_file, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -52,5 +55,13 @@ def generate_launch_description():
 
     ## Launch
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='false',
+            description='Use sim time if true'),
+        DeclareLaunchArgument(
+            'use_ros2_control',
+            default_value='true',
+            description='Use ros2_control if true'),
         robot_state_publisher
     ])
