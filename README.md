@@ -39,7 +39,7 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/di
 sudo nmap -p 22 192.168.86.0/24
 
 # Run slam
-ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/mikaeltrana/Documents/robot/my_bot/src/diff_drive_robot/bringup/config/mapper_params_online_async.yaml use_sim_time:=true
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/mikaeltrana/Documents/robot/my_bot/src/diff_drive_robot/bringup/config/mapper_params_online_async.yaml use_sim_time:=false
 
 # Use map saved from using slam and use it with map server
 ros2 run nav2_map_server map_server --ros-args -p yaml_filename:=test_map_v1.yaml -p use_sim_time:=true
