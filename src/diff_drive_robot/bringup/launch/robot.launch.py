@@ -42,6 +42,16 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','robot_state_publisher.launch.py')]), 
         launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true'}.items()
     )
+
+    ## Camera
+    camera = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','camera.launch.py')])
+    )
+
+    ## Lidar
+    lidar = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','rplidar.launch.py')])
+    )
     
     ## RViz
     rviz = Node(
@@ -97,5 +107,7 @@ def generate_launch_description():
         # rviz,
         delayed_controller_manager,
         delayed_diff_drive_controller_spawner,
-        delayed_joint_broad_spawner
+        delayed_joint_broad_spawner,
+        camera,
+        lidar
     ])
