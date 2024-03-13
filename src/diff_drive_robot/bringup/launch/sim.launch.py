@@ -41,10 +41,9 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
     )
 
-    joystick = IncludeLaunchDescription(package_name
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(pkg_project_bringup),'launch','joystick.launch.py'
-                )]), launch_arguments={'use_sim_time': 'true'}.items()
+    joystick = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup, 'launch','joystick.launch.py')]),
+        launch_arguments={'use_sim_time': 'true'}.items()
     )
 
     ## Gazebo
