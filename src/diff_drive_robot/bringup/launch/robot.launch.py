@@ -43,6 +43,14 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true'}.items()
     )
 
+    twist_mux_params = os.path.join(pkg_project_bringup,'config','twist_mux.yaml')
+    twist_mux = Node(
+            package="twist_mux",
+            executable="twist_mux",
+            parameters=[twist_mux_params, {'use_sim_time': True}],
+            remappings=[('/cmd_vel_out','/diff_drive_base_controller/cmd_vel_unstamped')]
+    )
+
     ## Camera
     camera = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','camera.launch.py')])
@@ -104,6 +112,7 @@ def generate_launch_description():
         # DeclareLaunchArgument('rviz', default_value='true',
         #                       description='Open RViz.'),
         robot_state_publisher,
+        twist_mux,
         # rviz,
         delayed_controller_manager,
         delayed_diff_drive_controller_spawner,

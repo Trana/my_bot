@@ -46,6 +46,14 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'true'}.items()
     )
 
+    twist_mux_params = os.path.join(pkg_project_bringup,'config','twist_mux.yaml')
+    twist_mux = Node(
+            package="twist_mux",
+            executable="twist_mux",
+            parameters=[twist_mux_params, {'use_sim_time': True}],
+            remappings=[('/cmd_vel_out','/diff_drive_base_controller/cmd_vel_unstamped')]
+    )
+
     ## Gazebo
     gazebo_params_file = os.path.join(pkg_project_bringup, 'config','gazebo_params.yaml')
     gazebo_config_file = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
@@ -100,6 +108,7 @@ def generate_launch_description():
     return LaunchDescription([
         robot_state_publisher,
         joystick,  
+        twist_mux,
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
                               description='Open RViz.'),
