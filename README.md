@@ -48,3 +48,9 @@ ros2 run nav2_util lifecycle_bringup map_server
 # Use AMCL localization with map from map server 
 ros2 run nav2_amcl amcl --ros-args -p use_sim_time:=true
 ros2 run nav2_util lifecycle_bringup amcl
+
+# Rviz robot config
+rviz2 -d my_bot/src/diff_drive_robot/bringup/config/robot.rviz
+
+# Run nav2
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true
