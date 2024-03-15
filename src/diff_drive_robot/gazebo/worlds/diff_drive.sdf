@@ -67,11 +67,12 @@
       </link>
     </model>
 
-    <model name="diff_drive">
+    <model name="diff_drive_robot">
       <self_collide>true</self_collide>
       <pose>0 0 0.0325 0 0 0</pose>
       <include merge="true">
-        <uri>package://description/models/urdf/robot.urdf</uri>
+        <uri>/home/mikaeltrana/Documents/robot/install/description/share/description/models/urdf/robot.urdf</uri>
+            <!-- <uri>package://description/models/urdf/robot.urdf</uri> -->    
       </include>
 
       <!-- <plugin
