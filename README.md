@@ -54,3 +54,11 @@ rviz2 -d my_bot/src/diff_drive_robot/bringup/config/robot.rviz
 
 # Run nav2
 ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true
+
+# AMCL with localization server etc in one launch file
+ros2 launch nav2_bringup localization_launch.py map:=/home/mikaeltrana/Documents/robot/install/description/share/description/maps/sollunden/van3.yaml use_sim_time:=true
+
+# Start Nav2 as well
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true map_subscribe_transient_local:=true 
+
+
