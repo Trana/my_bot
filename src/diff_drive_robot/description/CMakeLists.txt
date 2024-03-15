@@ -15,4 +15,10 @@ install(
   DESTINATION share/${PROJECT_NAME}/models
 )
 
+install(
+  DIRECTORY
+    maps/
+  DESTINATION share/${PROJECT_NAME}/maps
+)
+
 ament_package()
