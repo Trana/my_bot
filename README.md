@@ -61,4 +61,20 @@ ros2 launch nav2_bringup localization_launch.py map:=/home/mikaeltrana/Documents
 # Start Nav2 as well
 ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true map_subscribe_transient_local:=true 
 
+# Ball tracker
+ros2 run ball_tracker detect_ball --ros-args -p tuning_mode:=true -r image_in:=camera/image_raw
 
+ros2 launch ball_tracker ball_tracker.launch.py params_file:=my_bot/src/diff_drive_robot/bringup/config/ball_tracker_params_robot.yaml
+
+
+# Display ball in 3d
+ros2 run ball_tracker detect_ball_3d
+
+# Run follow ball
+ros2 run ball_tracker follow_ball --ros-args -r cmd_vel:=cmd_vel_tracker
+
+# Republish compressed image as uncompressed locally
+ros2 run image_transport republish compressed raw --ros-args -r in/compressed:=/camera/image_raw/compressed -r out:=/camera/image_raw/uncompressed
+
+# rqt image view
+ros2 run rqt_image_view rqt_image_view
