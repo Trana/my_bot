@@ -327,12 +327,12 @@
       <self_collide>false</self_collide>
     </model>
     <model name='sphere'>
-      <pose>-0.580226 2.18617 0.5 0 -0 0</pose>
+      <pose>-0.580226 2.18617 0.015 0 -0 0</pose>
       <link name='sphere_link'>
         <inertial>
           <inertia>
             <ixx>0.10000000000000001</ixx>
-            <ixy>0</ixy>
+            <ixy>0</ixy>1 1 1 1
             <ixz>0</ixz>
             <iyy>0.10000000000000001</iyy>
             <iyz>0</iyz>
@@ -344,7 +344,7 @@
         <collision name='sphere_collision'>
           <geometry>
             <sphere>
-              <radius>0.5</radius>
+              <radius>0.03</radius>
             </sphere>
           </geometry>
           <surface>
@@ -358,13 +358,13 @@
         <visual name='sphere_visual'>
           <geometry>
             <sphere>
-              <radius>0.5</radius>
+              <radius>0.03</radius>
             </sphere>
           </geometry>
           <material>
-            <ambient>0.3 0.3 0.3 1</ambient>
-            <diffuse>0.7 0.7 0.7 1</diffuse>
-            <specular>1 1 1 1</specular>
+            <ambient>0.8 0.8 0.6 1.0 </ambient>
+            <diffuse>1.0 0.8 0.2 1.0</diffuse>
+            <specular>1.0, 1.0 0.8 1.0</specular>
           </material>
         </visual>
         <pose>0 0 0 0 -0 0</pose>
