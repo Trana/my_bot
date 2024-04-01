@@ -66,6 +66,9 @@ ros2 run ball_tracker detect_ball --ros-args -p tuning_mode:=true -r image_in:=c
 
 ros2 launch ball_tracker ball_tracker.launch.py params_file:=my_bot/src/diff_drive_robot/bringup/config/ball_tracker_params_robot.yaml
 
+rviz2 -d my_bot/src/diff_drive_robot/bringup/config/robot.rviz
+
+ros2 launch bringup ball_tracker.launch.py tune_detection:=true detect_only:=true
 
 # Display ball in 3d
 ros2 run ball_tracker detect_ball_3d
