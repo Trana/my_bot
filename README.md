@@ -81,3 +81,19 @@ ros2 run image_transport republish compressed raw --ros-args -r in/compressed:=/
 
 # rqt image view
 ros2 run rqt_image_view rqt_image_view
+
+# Joystick for controller 
+ros2 launch bringup joystick.launch.py use_sim_time:=false
+
+# Build single package
+colcon build --packages-select gpt_chat
+
+
+# dev setup
+open vs code from terminal code .
+install ros extension from MS
+isntall CMake extension from twxs
+
+
+# env variables
+source ~/.zshrc
