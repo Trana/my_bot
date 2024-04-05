@@ -78,3 +78,7 @@ ros2 run image_transport republish compressed raw --ros-args -r in/compressed:=/
 
 # rqt image view
 ros2 run rqt_image_view rqt_image_view
+
+# ros 2 control hardware
+ros2 launch ros2_control_demo_example_2 diffbot.launch.py
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diffbot_base_controller/cmd_vel_unstamped
