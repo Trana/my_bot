@@ -66,6 +66,9 @@ ros2 run ball_tracker detect_ball --ros-args -p tuning_mode:=true -r image_in:=c
 
 ros2 launch ball_tracker ball_tracker.launch.py params_file:=my_bot/src/diff_drive_robot/bringup/config/ball_tracker_params_robot.yaml
 
+rviz2 -d my_bot/src/diff_drive_robot/bringup/config/robot.rviz
+
+ros2 launch bringup ball_tracker.launch.py tune_detection:=true detect_only:=true
 
 # Display ball in 3d
 ros2 run ball_tracker detect_ball_3d
@@ -79,6 +82,21 @@ ros2 run image_transport republish compressed raw --ros-args -r in/compressed:=/
 # rqt image view
 ros2 run rqt_image_view rqt_image_view
 
+# Joystick for controller 
+ros2 launch bringup joystick.launch.py use_sim_time:=false
+
+# Build single package
+colcon build --packages-select gpt_chat
+
+
+# dev setup
+open vs code from terminal code .
+install ros extension from MS
+isntall CMake extension from twxs
+
+
+# env variables
+source ~/.zshrc
 # ros 2 control hardware
 ros2 launch ros2_control_demo_example_2 diffbot.launch.py
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diffbot_base_controller/cmd_vel_unstamped
