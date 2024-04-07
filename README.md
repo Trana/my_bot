@@ -49,9 +49,6 @@ ros2 run nav2_util lifecycle_bringup map_server
 ros2 run nav2_amcl amcl --ros-args -p use_sim_time:=true
 ros2 run nav2_util lifecycle_bringup amcl
 
-# Rviz robot config
-rviz2 -d my_bot/src/diff_drive_robot/bringup/config/robot.rviz
-
 # Run nav2
 ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true
 
@@ -94,6 +91,8 @@ open vs code from terminal code .
 install ros extension from MS
 isntall CMake extension from twxs
 
-
 # env variables
 source ~/.zshrc
+
+# Save image
+ros2 run image_view image_saver --ros-args -r image:=image_raw/uncompressed
