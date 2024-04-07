@@ -1,0 +1,13 @@
+/**:
+    ros__parameters:
+      video_device: "/dev/video1"
+      framerate: 30.0
+      io_method: "mmap"
+      frame_id: "camera_1"
+      pixel_format: "mjpeg2rgb"
+#      color_format: "yuv422p" #Will result in less then 30fps on uncompressed topic
+      image_width: 960
+      image_height: 720
+      camera_name: "logitech_c920"
+#     Not sure if needed
+      # camera_info_url: "package://winder_camera/config/camera_1_info.yaml"
