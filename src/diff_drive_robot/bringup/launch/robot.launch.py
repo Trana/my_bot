@@ -51,9 +51,14 @@ def generate_launch_description():
             remappings=[('/cmd_vel_out','/diff_drive_base_controller/cmd_vel_unstamped')]
     )
 
-    ## Camera
-    camera = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','camera.launch.py')])
+    ## USB Camera
+    usb_camera = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','usb_camera.launch.py')])
+    )
+
+    ## PI Camera
+    pi_camera = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','pi_camera.launch.py')])
     )
 
     ## Lidar
@@ -117,6 +122,6 @@ def generate_launch_description():
         delayed_controller_manager,
         delayed_diff_drive_controller_spawner,
         delayed_joint_broad_spawner,
-        # camera,
+        # usb_camera,
         # lidar    
         ])
