@@ -1,0 +1,4 @@
+/**:
+  ros__parameters:
+    save_all_image: false
+    filename_format: "/home/mikaeltrana/Documents/robot/camera_images/image_%04d.png"   
