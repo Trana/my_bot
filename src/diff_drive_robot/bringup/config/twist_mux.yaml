@@ -11,7 +11,7 @@ twist_mux:
         priority: 20
       tracker:
         topic   : cmd_vel_chat
-        timeout : 0.5
+        timeout : 2.0
         priority: 30
       joystick:
         topic   : cmd_vel_joy
