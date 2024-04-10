@@ -25,7 +25,7 @@ def generate_launch_description():
 
     joystick = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup, 'launch','joystick.launch.py')]),
-        launch_arguments={'use_sim_time': 'true'}.items()
+        launch_arguments={'use_sim_time': 'false'}.items()
     )
 
     image_saver = IncludeLaunchDescription(

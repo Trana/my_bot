@@ -54,6 +54,11 @@ def generate_launch_description():
             remappings=[('/cmd_vel_out','/diff_drive_base_controller/cmd_vel_unstamped')]
     )
 
+    ## Image Saver
+    image_saver = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','image_saver.launch.py')])
+    )
+
     ## Gazebo
     gazebo_params_file = os.path.join(pkg_project_bringup, 'config','gazebo_params.yaml')
     gazebo_config_file = os.path.join(pkg_project_bringup, 'config', 'gazebo.config')
@@ -114,6 +119,7 @@ def generate_launch_description():
                               description='Open RViz.'),
         bridge,
         rviz,
+        image_saver,
         diff_drive_controller_spawner,
         joint_state_broadcast_spawner
     ])

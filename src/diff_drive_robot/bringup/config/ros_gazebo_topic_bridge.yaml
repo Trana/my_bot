@@ -19,7 +19,7 @@
   ros_type_name: "sensor_msgs/msg/LaserScan"
   gz_type_name: "gz.msgs.LaserScan"
   direction: GZ_TO_ROS
-- ros_topic_name: "/image"
+- ros_topic_name: "/image_raw/uncrompressed"
   gz_topic_name: "/image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
