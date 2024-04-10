@@ -6,6 +6,8 @@ from launch import LaunchDescription
 from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
     # Configure ROS nodes for launch
@@ -21,7 +23,16 @@ def generate_launch_description():
        
     )
 
-    main_cam_image_transport_cmd = Node(
+    joystick = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup, 'launch','joystick.launch.py')]),
+        launch_arguments={'use_sim_time': 'true'}.items()
+    )
+
+    image_saver = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','image_saver.launch.py')])
+    )
+
+    robot_cam_compressed_topic_republish = Node(
     package='image_transport',
     executable='republish',
     arguments=['compressed', 'raw'],
@@ -32,7 +43,9 @@ def generate_launch_description():
 
     ## Launch
     return LaunchDescription([
-        main_cam_image_transport_cmd,
-        rviz,        
+        robot_cam_compressed_topic_republish,        
+        image_saver,
+        rviz,
+        joystick
     ])
 
