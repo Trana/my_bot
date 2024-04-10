@@ -61,17 +61,14 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','pi_camera.launch.py')])
     )
 
+    ## Image Saver
+    image_saver = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','image_saver.launch.py')])
+    )
+
     ## Lidar
     lidar = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(pkg_project_bringup,'launch','rplidar.launch.py')])
-    )
-    
-    ## RViz
-    rviz = Node(
-       package='rviz2',
-       executable='rviz2',
-       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'diff_drive.rviz')],
-       condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
@@ -114,14 +111,11 @@ def generate_launch_description():
 
     ## Launch
     return LaunchDescription([
-        # DeclareLaunchArgument('rviz', default_value='true',
-        #                       description='Open RViz.'),
         robot_state_publisher,
-        twist_mux,
-        # rviz,
+        twist_mux,  
         delayed_controller_manager,
         delayed_diff_drive_controller_spawner,
         delayed_joint_broad_spawner,
-        # usb_camera,
+        usb_camera,
         # lidar    
         ])
