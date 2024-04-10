@@ -14,7 +14,8 @@ def generate_launch_description():
             executable='image_saver',
             output='screen',
             remappings=[
-            ('image', 'image_raw/uncompressed')],    
+            ('image', '/image_raw/uncompressed'),
+            ('camera_info', '/image_raw/camera_info_dummy')],    
             parameters=[image_saver_params],        
         )
     ])
