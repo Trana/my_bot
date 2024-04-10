@@ -9,7 +9,7 @@ twist_mux:
         topic   : cmd_vel_tracker
         timeout : 0.5
         priority: 20
-      tracker:
+      chat:
         topic   : cmd_vel_chat
         timeout : 0.5
         priority: 30
